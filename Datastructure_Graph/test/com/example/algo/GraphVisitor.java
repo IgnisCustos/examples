@@ -1,4 +1,4 @@
-package com.example.tests;
+package com.example.algo;
 
 import java.util.LinkedList;
 

@@ -1,4 +1,4 @@
-package com.example.tests;
+package com.example.algo;
 
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
