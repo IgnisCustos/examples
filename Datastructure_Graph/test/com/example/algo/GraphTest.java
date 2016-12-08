@@ -8,9 +8,6 @@ import java.util.LinkedList;
 
 import org.junit.Test;
 
-//import com.example.algo.Graph;
-//import com.example.algo.Vertex;
-
 public class GraphTest {
 
 	@Test
