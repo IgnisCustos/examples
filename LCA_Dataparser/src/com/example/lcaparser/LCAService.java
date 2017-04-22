@@ -55,6 +55,10 @@ public class LCAService
 		    parseCSVLine(bw, line);
 		}
 	    }
+	    System.out.println("");
+	    System.out.println("Parsef file: " + inFile.getName());
+	    System.out.println("Total parsed lines :'" + lineNumber + "'");
+
 	}
 	catch (IOException e)
 	{
@@ -125,7 +129,7 @@ public class LCAService
 	{
 	    e.printStackTrace();
 	}
-	System.out.println(lca.toString());
+	// System.out.println(lca.toString());
 	bw.write(lca.toString());
 	bw.newLine();
     }

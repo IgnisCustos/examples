@@ -238,29 +238,71 @@ public class LCACase
     private String buildINSERT()
     {
 	StringBuilder sb = new StringBuilder();
-	sb.append("INSERT INTO films VALUES(");
-	sb.append("'" + caseNo + "'").append(",");
-	sb.append("'" + caseStatus + "'").append(",");
-	sb.append("'" + caseSubmitted + "'").append(",");
-	sb.append("'" + decisionDate + "'").append(",");
-	sb.append("'" + visaClass + "'").append(",");
-	sb.append("'" + employmentStartDate + "'").append(",");
-	sb.append("'" + employmentEndDate + "'").append(",");
-	sb.append("'" + employerName + "'").append(",");
-	sb.append("'" + employerAddress + "'").append(",");
-	sb.append("'" + employerCity + "'").append(",");
-	sb.append("'" + employerState + "'").append(",");
-	sb.append("'" + employerPostalCode + "'").append(",");
-	sb.append("'" + jobTitle + "'").append(",");
-	sb.append("'" + socCode + "'").append(",");
-	sb.append("'" + socName + "'").append(",");
-	sb.append("'" + totalWorkers + "'").append(",");
-	sb.append("'" + fullTimePosition + "'").append(",");
-	sb.append("'" + worksiteLocation + "'").append(",");
-	sb.append("'" + worksiteState + "'").append(",");
-	sb.append("'" + NAIC + "'").append(");");
+	sb.append("INSERT INTO lca VALUES(");
+	sb.append(inputValidation(caseNo)).append(",");
+	sb.append(inputValidation(caseStatus)).append(",");
+	sb.append(inputValidation(caseSubmitted)).append(",");
+	sb.append(inputValidation(decisionDate)).append(",");
+	sb.append(inputValidation(visaClass)).append(",");
+	sb.append(inputValidation(employmentStartDate)).append(",");
+	sb.append(inputValidation(employmentEndDate)).append(",");
+	sb.append(inputValidation(employerName)).append(",");
+	sb.append(inputValidation(employerAddress)).append(",");
+	sb.append(inputValidation(employerCity)).append(",");
+	sb.append(inputValidation(employerState)).append(",");
+	sb.append(inputValidation(employerPostalCode)).append(",");
+	sb.append(inputValidation(jobTitle)).append(",");
+	sb.append(inputValidation(socCode)).append(",");
+	sb.append(inputValidation(socName)).append(",");
+	sb.append(inputValidation(totalWorkers)).append(",");
+	sb.append(inputValidation(fullTimePosition)).append(",");
+	sb.append(inputValidation(worksiteLocation)).append(",");
+	sb.append(inputValidation(worksiteState)).append(",");
+	sb.append(inputValidation(NAIC)).append(");");
 
 	return sb.toString();
+    }
+
+    public static String createTABLE()
+    {
+	StringBuilder sb = new StringBuilder();
+	sb.append("CREATE TABLE lca(");
+	sb.append("caseNo").append(" ").append("varchar(100)").append(" ").append(",");
+	sb.append("caseStatus").append(" ").append("varchar(100)").append(",");
+	sb.append("caseSubmitted").append(" ").append("varchar(100)").append(",");
+	sb.append("decisionDate").append(" ").append("varchar(100)").append(",");
+	sb.append("visaClass").append(" ").append("varchar(100)").append(",");
+	sb.append("employmentStartDate").append(" ").append("varchar(100)").append(",");
+	sb.append("employmentEndDate").append(" ").append("varchar(100)").append(",");
+	sb.append("employerName").append(" ").append("varchar(100)").append(",");
+	sb.append("employerAddress").append(" ").append("varchar(100)").append(",");
+	sb.append("employerCity").append(" ").append("varchar(100)").append(",");
+	sb.append("employerState").append(" ").append("varchar(100)").append(",");
+	sb.append("employerPostalCode").append(" ").append("varchar(100)").append(",");
+	sb.append("jobTitle").append(" ").append("varchar(100)").append(",");
+	sb.append("socCode").append(" ").append("varchar(100)").append(",");
+	sb.append("socName").append(" ").append("varchar(100)").append(",");
+	sb.append("totalWorkers").append(" ").append("varchar(100)").append(",");
+	sb.append("fullTimePosition").append(" ").append("varchar(100)").append(",");
+	sb.append("worksiteLocation").append(" ").append("varchar(100)").append(",");
+	sb.append("worksiteState").append(" ").append("varchar(100)").append(",");
+	sb.append("NAIC");
+	sb.append(");");
+
+	return sb.toString();
+    }
+
+    private String inputValidation(String inserValue)
+    {
+	if (inserValue != null)
+	{
+	    inserValue = "'" + inserValue.replace("'", "''") + "'";
+	}
+	else
+	{
+	    inserValue = "null";
+	}
+	return inserValue;
     }
 
 }

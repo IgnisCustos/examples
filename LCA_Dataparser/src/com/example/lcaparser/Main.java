@@ -1,21 +1,25 @@
 package com.example.lcaparser;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 
 public class Main
 {
 
     public static void main(String[] args) throws IOException
     {
-
-	if (args.length == 1)
+	String dir = "";
+	for (String inFilePath : args)
 	{
-	    File inFile = new File(args[0]);
-	    String outFilePath = inFile.getAbsolutePath() + ".sql";
+	    File inFile = new File(inFilePath);
+	    String outFilePath = inFile.getAbsolutePath().replace(".csv", "") + ".sql";
 	    File outFile = new File(outFilePath);
+	    dir = inFile.getPath();
 
-	    System.out.println("InputPath: " + args[0]);
+	    System.out.println("InputPath: " + inFilePath);
 	    System.out.println("OutputPath: " + outFilePath);
 
 	    System.out.println("InputFile: " + inFile.getAbsolutePath());
@@ -24,11 +28,15 @@ public class Main
 	    LCAService lcaService = new LCAService();
 	    lcaService.parseCSVtoSQL(inFile, outFile);
 	}
-	else
-	{
-	    System.out.println("Wrong params! Params:" + args.length);
-	    System.out.println("Param 1 = INPUTFILE");
-	}
+
+	File creationFile = new File(dir + "_TableCreation.sql");
+	FileOutputStream fos = new FileOutputStream(creationFile);
+	BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
+
+	bw.write(LCACase.createTABLE());
+	bw.newLine();
+	bw.close();
+
     }
 
 }
