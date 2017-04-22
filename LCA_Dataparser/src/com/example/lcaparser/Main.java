@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.List;
 
 public class Main
 {
@@ -29,13 +30,20 @@ public class Main
 	    lcaService.parseCSVtoSQL(inFile, outFile);
 	}
 
+	List<String> tablecreaton = LCACase.createTABLE();
 	File creationFile = new File(dir + "_TableCreation.sql");
 	FileOutputStream fos = new FileOutputStream(creationFile);
 	BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
 
-	bw.write(LCACase.createTABLE());
-	bw.newLine();
+	for (String string : tablecreaton)
+	{
+	    bw.write(string);
+	    bw.newLine();
+	}
+
 	bw.close();
+
+	System.out.println("############### Finished ##################");
 
     }
 

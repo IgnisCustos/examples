@@ -2,7 +2,11 @@ package com.example.lcaparser;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class LCACase
@@ -239,31 +243,96 @@ public class LCACase
     {
 	StringBuilder sb = new StringBuilder();
 	sb.append("INSERT INTO lca VALUES(");
-	sb.append(inputValidation(caseNo)).append(",");
-	sb.append(inputValidation(caseStatus)).append(",");
-	sb.append(inputValidation(caseSubmitted)).append(",");
-	sb.append(inputValidation(decisionDate)).append(",");
-	sb.append(inputValidation(visaClass)).append(",");
-	sb.append(inputValidation(employmentStartDate)).append(",");
-	sb.append(inputValidation(employmentEndDate)).append(",");
-	sb.append(inputValidation(employerName)).append(",");
-	sb.append(inputValidation(employerAddress)).append(",");
-	sb.append(inputValidation(employerCity)).append(",");
-	sb.append(inputValidation(employerState)).append(",");
-	sb.append(inputValidation(employerPostalCode)).append(",");
-	sb.append(inputValidation(jobTitle)).append(",");
-	sb.append(inputValidation(socCode)).append(",");
-	sb.append(inputValidation(socName)).append(",");
-	sb.append(inputValidation(totalWorkers)).append(",");
-	sb.append(inputValidation(fullTimePosition)).append(",");
-	sb.append(inputValidation(worksiteLocation)).append(",");
-	sb.append(inputValidation(worksiteState)).append(",");
-	sb.append(inputValidation(NAIC)).append(");");
+	sb.append(inputValidationStr(caseNo)).append(",");
+	sb.append(inputValidationStr(caseStatus)).append(",");
+	sb.append(inputValidationDate(caseSubmitted)).append(",");
+	sb.append(inputValidationDate(decisionDate)).append(",");
+	sb.append(inputValidationStr(visaClass)).append(",");
+	sb.append(inputValidationDate(employmentStartDate)).append(",");
+	sb.append(inputValidationDate(employmentEndDate)).append(",");
+	sb.append(inputValidationStr(employerName)).append(",");
+	sb.append(inputValidationStr(employerAddress)).append(",");
+	sb.append(inputValidationStr(employerCity)).append(",");
+	sb.append(inputValidationStr(employerState)).append(",");
+	sb.append(inputValidationStr(employerPostalCode)).append(",");
+	sb.append(inputValidationStr(jobTitle)).append(",");
+	sb.append(inputValidationStr(socCode)).append(",");
+	sb.append(inputValidationStr(socName)).append(",");
+	sb.append(inputValidationStr(totalWorkers)).append(",");
+	sb.append(inputValidationStr(fullTimePosition)).append(",");
+	sb.append(inputValidationStr(worksiteLocation)).append(",");
+	sb.append(inputValidationStr(worksiteState)).append(",");
+	sb.append(inputValidationStr(NAIC)).append(");");
 
 	return sb.toString();
     }
 
-    public static String createTABLE()
+    public static List<String> createTABLE()
+    {
+	List<String> createTableQuery = new ArrayList<>();
+	createTableQuery.add("DROP TABLE IF EXISTS lca;");
+	createTableQuery.add("CREATE TABLE lca(");
+	createTableQuery.add("caseNo VARCHAR(100),");
+	createTableQuery.add("caseStatus VARCHAR(100),");
+	createTableQuery.add("caseSubmitted DATE,");
+	createTableQuery.add("decisionDate DATE,");
+	createTableQuery.add("visaClass VARCHAR(100),");
+	createTableQuery.add("employmentStartDate DATE,");
+	createTableQuery.add("employmentEndDate DATE,");
+	createTableQuery.add("employerName VARCHAR(100),");
+	createTableQuery.add("employerAddress VARCHAR(100),");
+	createTableQuery.add("employerCity VARCHAR(100),");
+	createTableQuery.add("employerState VARCHAR(100),");
+	createTableQuery.add("employerPostalCode VARCHAR(100),");
+	createTableQuery.add("jobTitle VARCHAR(100),");
+	createTableQuery.add("socCode VARCHAR(100),");
+	createTableQuery.add("socName VARCHAR(100),");
+	createTableQuery.add("totalWorkers VARCHAR(100),");
+	createTableQuery.add("fullTimePosition VARCHAR(100),");
+	createTableQuery.add("worksiteLocation VARCHAR(100),");
+	createTableQuery.add("worksiteState VARCHAR(100),");
+	createTableQuery.add("NAIC VARCHAR(100)");
+	createTableQuery.add(");");
+
+	return createTableQuery;
+    }
+
+    private String inputValidationStr(String inserValue)
+    {
+	if (inserValue != null)
+	{
+	    inserValue = "'" + inserValue.replace("'", "''") + "'";
+	}
+	else
+	{
+	    inserValue = "null";
+	}
+	return inserValue;
+    }
+
+    private String inputValidationDate(String dateStr)
+    {
+	if (dateStr != null || dateStr == "")
+	{
+	    SimpleDateFormat sdfOutput = new SimpleDateFormat("yyyy-MM-dd");
+	    SimpleDateFormat sdfInput = new SimpleDateFormat("dd.MM.yyyy");
+	    try
+	    {
+		dateStr = "'" + sdfOutput.format(sdfInput.parse(dateStr)) + "'";
+	    }
+	    catch (ParseException e)
+	    {
+		return "null";
+	    }
+	}
+	else
+	{
+	    dateStr = "null";
+	}
+	return dateStr;
+    }
+
+    public static String createTABLE_OneLiner()
     {
 	StringBuilder sb = new StringBuilder();
 	sb.append("CREATE TABLE lca(");
@@ -290,19 +359,6 @@ public class LCACase
 	sb.append(");");
 
 	return sb.toString();
-    }
-
-    private String inputValidation(String inserValue)
-    {
-	if (inserValue != null)
-	{
-	    inserValue = "'" + inserValue.replace("'", "''") + "'";
-	}
-	else
-	{
-	    inserValue = "null";
-	}
-	return inserValue;
     }
 
 }
