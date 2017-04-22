@@ -9,29 +9,36 @@ import java.util.List;
 
 public class Main
 {
+    private String dir = "";
 
     public static void main(String[] args) throws IOException
     {
-	String dir = "";
+	Main main = new Main();
+	main.init(args);
+    }
+
+    private void init(String[] args) throws IOException
+    {
 	for (String inFilePath : args)
 	{
+	    System.out.println("############### START ###############");
 	    File inFile = new File(inFilePath);
 	    String outFilePath = inFile.getAbsolutePath().replace(".csv", "") + ".sql";
 	    File outFile = new File(outFilePath);
-	    dir = inFile.getPath();
 
-	    System.out.println("InputPath: " + inFilePath);
-	    System.out.println("OutputPath: " + outFilePath);
+	    String dirPath = inFile.getAbsolutePath();
+	    dir = dirPath.substring(0, dirPath.lastIndexOf(File.separator)) + "\\";
 
 	    System.out.println("InputFile: " + inFile.getAbsolutePath());
 	    System.out.println("OutputFile: " + outFile.getAbsolutePath());
+	    System.out.println("Directory: " + dir);
 
 	    LCAService lcaService = new LCAService();
 	    lcaService.parseCSVtoSQL(inFile, outFile);
 	}
 
 	List<String> tablecreaton = LCACase.createTABLE();
-	File creationFile = new File(dir + "_TableCreation.sql");
+	File creationFile = new File(dir + "LCA_TableCreation.sql");
 	FileOutputStream fos = new FileOutputStream(creationFile);
 	BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
 
@@ -43,8 +50,7 @@ public class Main
 
 	bw.close();
 
-	System.out.println("############### Finished ##################");
-
+	System.out.println("############### FINISH ###############");
     }
 
 }

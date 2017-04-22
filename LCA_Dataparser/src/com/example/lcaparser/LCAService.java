@@ -17,14 +17,21 @@ import java.util.regex.Pattern;
 
 public class LCAService
 {
-    private Map<String, String> declarationMap;
+    private Map<String, String> declarationRegexMap;
     private Map<Integer, String> declarationLineup;
 
     public LCAService()
     {
-	this.declarationMap = new LCACase("").getDeclarationmap();
+	this.declarationRegexMap = new LCACase("").getDeclarationmap();
     }
 
+    /**
+     * Parse a given inFile into LCACase Object and write it to outFile
+     * 
+     * @param inFile
+     * @param outFile
+     * @throws IOException
+     */
     public void parseCSVtoSQL(File inFile, File outFile) throws IOException
     {
 	FileOutputStream fos = new FileOutputStream(outFile);
@@ -70,6 +77,12 @@ public class LCAService
 	}
     }
 
+    /**
+     * Extract from first CSV Line the position of declared fields and gives it as key,value map back
+     * 
+     * @param csvLine
+     * @return
+     */
     private Map<Integer, String> getDeclarationLine(String csvLine)
     {
 	Map<Integer, String> declarationLine = new HashMap<Integer, String>();
@@ -85,9 +98,15 @@ public class LCAService
 	return declarationLine;
     }
 
+    /**
+     * check with defined regularExpression against given columnName normally the inputline cames from first csv line
+     * 
+     * @param line
+     * @return
+     */
     private String matchesUp(String line)
     {
-	for (Map.Entry<String, String> entry : declarationMap.entrySet())
+	for (Map.Entry<String, String> entry : declarationRegexMap.entrySet())
 	{
 	    // String to be scanned to find the pattern.
 	    String pattern = entry.getValue();
@@ -107,6 +126,13 @@ public class LCAService
 	return null;
     }
 
+    /**
+     * BusinessLogic get all values from line and fill it with reflection into provided setter methods from LCACase
+     * 
+     * @param bw
+     * @param csvLine
+     * @throws IOException
+     */
     private void parseCSVLine(BufferedWriter bw, String csvLine) throws IOException
     {
 
@@ -121,7 +147,14 @@ public class LCAService
 		if (declaredField != null)
 		{
 		    Method method = lca.getClass().getMethod("set" + declaredField, String.class);
-		    method.invoke(lca, values[i]);
+		    if (method.isAnnotationPresent(LCASetter.class))
+		    {
+			method.invoke(lca, values[i]);
+		    }
+		    else
+		    {
+			throw new IllegalAccessError("The Method you're trying to reach isn't proberly correct annotated");
+		    }
 		}
 	    }
 	}
@@ -129,7 +162,6 @@ public class LCAService
 	{
 	    e.printStackTrace();
 	}
-	// System.out.println(lca.toString());
 	bw.write(lca.toString());
 	bw.newLine();
     }

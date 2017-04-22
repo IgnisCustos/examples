@@ -5,75 +5,115 @@ import java.lang.reflect.Modifier;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Three Values are chained thogether NAME of VARIABLE annotated with LAC.class (position,type)
+ * 
+ * NAME of REGEX-Variable annotated wit LCARegex.class
+ * 
+ * NAME of SETTER for VARIABLE annotated wit LCASetter.class
+ * 
+ * @author Ignis
+ *
+ */
 public class LCACase
 {
 
     // Fields
-    @LCA(pos = 1)
+    @LCA(pos = 1, type = "VARCHAR(100)")
     private String caseNo;
-    @LCA(pos = 2)
+    @LCA(pos = 2, type = "VARCHAR(100)")
     private String caseStatus;
-    @LCA(pos = 3)
+    @LCA(pos = 3, type = "VARCHAR(100)")
     private String caseSubmitted;
-    @LCA(pos = 4)
+    @LCA(pos = 4, type = "DATE")
     private String decisionDate;
-    @LCA(pos = 5)
+    @LCA(pos = 5, type = "DATE")
     private String visaClass;
-    @LCA(pos = 6)
+    @LCA(pos = 6, type = "VARCHAR(100)")
     private String employmentStartDate;
-    @LCA(pos = 7)
+    @LCA(pos = 7, type = "DATE")
     private String employmentEndDate;
-    @LCA(pos = 8)
+    @LCA(pos = 8, type = "DATE")
     private String employerName;
-    @LCA(pos = 9)
+    @LCA(pos = 9, type = "VARCHAR(100)")
     private String employerAddress;
-    @LCA(pos = 10)
+    @LCA(pos = 10, type = "VARCHAR(100)")
     private String employerCity;
-    @LCA(pos = 11)
+    @LCA(pos = 11, type = "VARCHAR(100)")
     private String employerState;
-    @LCA(pos = 12)
+    @LCA(pos = 12, type = "VARCHAR(100)")
     private String employerPostalCode;
-    @LCA(pos = 13)
+    @LCA(pos = 13, type = "VARCHAR(100)")
     private String jobTitle;
-    @LCA(pos = 14)
+    @LCA(pos = 14, type = "VARCHAR(100)")
     private String socCode;
-    @LCA(pos = 15)
+    @LCA(pos = 15, type = "VARCHAR(100)")
     private String socName;
-    @LCA(pos = 16)
+    @LCA(pos = 16, type = "VARCHAR(100)")
     private String totalWorkers;
-    @LCA(pos = 17)
+    @LCA(pos = 17, type = "VARCHAR(100)")
     private String fullTimePosition;
-    @LCA(pos = 18)
-    private String worksiteLocation;
-    @LCA(pos = 19)
+    @LCA(pos = 18, type = "VARCHAR(100)")
+    private String worksiteCity;
+    @LCA(pos = 19, type = "VARCHAR(100)")
+    private String worksiteCounty;
+    @LCA(pos = 20, type = "VARCHAR(100)")
     private String worksiteState;
-    @LCA(pos = 20)
+    @LCA(pos = 21, type = "VARCHAR(100)")
+    private String worksitePostalCode;
+    @LCA(pos = 22, type = "VARCHAR(100)")
     private String NAIC;
 
     // Regex for fields
+    @LCARegex
     private static String regexCaseNo = "(CASE)_(NO|NUMBER)";
+    @LCARegex
     private static String regexCaseStatus = "(CASE)?_?(STATUS)";
+    @LCARegex
     private static String regexCaseSubmitted = "(CASE)?_?(SUBMIT)";
+    @LCARegex
     private static String regexDecisionDate = "(DECISION)_?(DATE)";
+    @LCARegex
     private static String regexVisaClass = "(VISA)_?(CLASS)";
+    @LCARegex
     private static String regexEmploymentStartDate = "\\w+(START)_(DATE)";
+    @LCARegex
     private static String regexEmploymentEndDate = "\\w+(END)_(DATE)";
+    @LCARegex
     private static String regexEmployerName = "(EMPLOYER)_(NAME)";
+    @LCARegex
     private static String regexEmployerAddress = "\\w+(EMPLOYER)?_?(ADDRESS)(?!2)";
+    @LCARegex
     private static String regexEmployerCity = "(EMPLOYER)_?(CITY)";
+    @LCARegex
     private static String regexEmployerState = "(EMPLOYER)_?(STATE)";
+    @LCARegex
     private static String regexEmployerPostalCode = "(EMPLOYER)_?(POSTAL)";
+    @LCARegex
     private static String regexJobTitle = "(JOB)_?(TITLE)";
+    @LCARegex
     private static String regexSocCode = "(SOC)_?(CODE)";
+    @LCARegex
     private static String regexSocName = "(SOC)_?(NAME)";
+    @LCARegex
     private static String regexTotalWorkers = "(TOTAL)( |_)(WORKERS)";
+    @LCARegex
     private static String regexFullTimePosition = "(FULL)_?(TIME)";
-    private static String regexWorksiteLocation = "(WORK)(LOC1|SITE)_?(CITY)";
+    @LCARegex
+    private static String regexWorksiteCity = "(WORK)(LOC1|SITE)_?(CITY)";
+    @LCARegex
+    private static String regexWorksiteCounty = "(WORK)(LOC1|SITE)_?(COUNTY)";
+    @LCARegex
     private static String regexWorksiteState = "(WORK)(LOC1|SITE)_?(STATE)";
+    @LCARegex
+    private static String regexWorksitePostalCode = "(WORK)(LOC1|SITE)_?(POSTAL)";
+    @LCARegex
     private static String regexNAIC = "(NAIC)";
 
     private Map<String, String> declarationMap;
@@ -84,7 +124,8 @@ public class LCACase
 
     public LCACase(String forInit)
     {
-	this.declarationMap = setDeclarationmap();
+	this.declarationMap = setDeclarationMap();
+	System.out.println("");
 	System.out.println("------------------- declarationMap (Entrys: " + declarationMap.size() + ") ---------------------");
 	for (Map.Entry<String, String> entry : declarationMap.entrySet())
 	{
@@ -94,7 +135,7 @@ public class LCACase
 
     }
 
-    private Map<String, String> setDeclarationmap()
+    private Map<String, String> setDeclarationMap()
     {
 	Map<String, String> declarationMap = new HashMap<String, String>();
 	try
@@ -119,106 +160,139 @@ public class LCACase
 	return declarationMap;
     }
 
+    @LCASetter
     public Map<String, String> getDeclarationmap()
     {
 	return declarationMap;
     }
 
+    @LCASetter
     public void setCaseNo(String caseNo)
     {
 	this.caseNo = caseNo;
     }
 
+    @LCASetter
     public void setCaseStatus(String caseStatus)
     {
 	this.caseStatus = caseStatus;
     }
 
+    @LCASetter
     public void setCaseSubmitted(String caseSubmitted)
     {
 	this.caseSubmitted = caseSubmitted;
     }
 
+    @LCASetter
     public void setDecisionDate(String decisionDate)
     {
 	this.decisionDate = decisionDate;
     }
 
+    @LCASetter
     public void setVisaClass(String visaClass)
     {
 	this.visaClass = visaClass;
     }
 
+    @LCASetter
     public void setEmploymentStartDate(String employmentStartDate)
     {
 	this.employmentStartDate = employmentStartDate;
     }
 
+    @LCASetter
     public void setEmploymentEndDate(String employmentEndDate)
     {
 	this.employmentEndDate = employmentEndDate;
     }
 
+    @LCASetter
     public void setEmployerName(String employerName)
     {
 	this.employerName = employerName;
     }
 
+    @LCASetter
     public void setEmployerAddress(String employerAddress)
     {
 	this.employerAddress = employerAddress;
     }
 
+    @LCASetter
     public void setEmployerCity(String employerCity)
     {
 	this.employerCity = employerCity;
     }
 
+    @LCASetter
     public void setEmployerState(String employerState)
     {
 	this.employerState = employerState;
     }
 
+    @LCASetter
     public void setEmployerPostalCode(String employerPostalCode)
     {
 	this.employerPostalCode = employerPostalCode;
     }
 
+    @LCASetter
     public void setJobTitle(String jobTitle)
     {
 	this.jobTitle = jobTitle;
     }
 
+    @LCASetter
     public void setSocCode(String socCode)
     {
 	this.socCode = socCode;
     }
 
+    @LCASetter
     public void setSocName(String socName)
     {
 	this.socName = socName;
     }
 
+    @LCASetter
     public void setTotalWorkers(String totalWorkers)
     {
 	this.totalWorkers = totalWorkers;
     }
 
+    @LCASetter
     public void setFullTimePosition(String fullTimePosition)
     {
 	this.fullTimePosition = fullTimePosition;
     }
 
-    public void setWorksiteLocation(String worksiteLocation)
+    @LCASetter
+    public void setWorksiteCity(String worksiteCity)
     {
-	this.worksiteLocation = worksiteLocation;
+	this.worksiteCity = worksiteCity;
     }
 
+    @LCASetter
+    public void setWorksiteCounty(String worksiteCounty)
+    {
+	this.worksiteCounty = worksiteCounty;
+    }
+
+    @LCASetter
     public void setWorksiteState(String worksiteState)
     {
 	this.worksiteState = worksiteState;
     }
 
+    @LCASetter
+    public void setWorksitePostalCode(String worksitePostalCode)
+    {
+	this.worksitePostalCode = worksitePostalCode;
+    }
+
+    @LCASetter
     public void setNAIC(String naic)
     {
 	this.NAIC = naic;
@@ -232,38 +306,56 @@ public class LCACase
     @Override
     public String toString()
     {
-	// String str = "LCACase [caseNo=" + caseNo + ", caseStatus=" + caseStatus + ", caseSubmitted=" + caseSubmitted + ", decisionDate=" + decisionDate + ", visaClass=" + visaClass + ", employmentStartDate=" + employmentStartDate
-	// + ", employmentEndDate=" + employmentEndDate + ", employerName=" + employerName + ", employerAddress=" + employerAddress + ", employerCity=" + employerCity + ", employerState=" + employerState + ", employerPostalCode="
-	// + employerPostalCode + ", jobTitle=" + jobTitle + ", socCode=" + socCode + ", socName=" + socName + ", totalWorkers=" + totalWorkers + ", fullTimePosition=" + fullTimePosition + ", worksiteLocation=" + worksiteLocation
-	// + ", worksiteState=" + worksiteState + ", naic=" + NAIC + "]";
 	return buildINSERT();
     }
 
+    /**
+     * Build INSERT INTO Query entirely from annotation
+     * 
+     * @return
+     */
     private String buildINSERT()
     {
+	Map<Integer, Field> databaseFields = new LinkedHashMap<>();
+	List<String> createTableQuery = new ArrayList<>();
 	StringBuilder sb = new StringBuilder();
 	sb.append("INSERT INTO lca VALUES(");
-	sb.append(inputValidationStr(caseNo)).append(",");
-	sb.append(inputValidationStr(caseStatus)).append(",");
-	sb.append(inputValidationDate(caseSubmitted)).append(",");
-	sb.append(inputValidationDate(decisionDate)).append(",");
-	sb.append(inputValidationStr(visaClass)).append(",");
-	sb.append(inputValidationDate(employmentStartDate)).append(",");
-	sb.append(inputValidationDate(employmentEndDate)).append(",");
-	sb.append(inputValidationStr(employerName)).append(",");
-	sb.append(inputValidationStr(employerAddress)).append(",");
-	sb.append(inputValidationStr(employerCity)).append(",");
-	sb.append(inputValidationStr(employerState)).append(",");
-	sb.append(inputValidationStr(employerPostalCode)).append(",");
-	sb.append(inputValidationStr(jobTitle)).append(",");
-	sb.append(inputValidationStr(socCode)).append(",");
-	sb.append(inputValidationStr(socName)).append(",");
-	sb.append(inputValidationStr(totalWorkers)).append(",");
-	sb.append(inputValidationStr(fullTimePosition)).append(",");
-	sb.append(inputValidationStr(worksiteLocation)).append(",");
-	sb.append(inputValidationStr(worksiteState)).append(",");
-	sb.append(inputValidationStr(NAIC)).append(");");
+	createTableQuery.add("INSERT INTO lca VALUES(");
 
+	Field[] fields = LCACase.class.getDeclaredFields();
+	for (Field field : fields)
+	{
+	    if (Modifier.isPrivate(field.getModifiers()) && field.isAnnotationPresent(LCA.class))
+	    {
+		databaseFields.put(field.getAnnotation(LCA.class).pos(), field);
+	    }
+	}
+
+	for (int i = 1; i <= databaseFields.size(); i++)
+	{
+	    try
+	    {
+		Field field = databaseFields.get(i);
+		switch (field.getAnnotation(LCA.class).type())
+		{
+		    case "VARCHAR(100)":
+			sb.append(inputValidationStr((String) field.get(this))).append((i < databaseFields.size() ? "," : ""));
+			break;
+		    case "DATE":
+			sb.append(inputValidationDate((String) field.get(this))).append((i < databaseFields.size() ? "," : ""));
+			break;
+		    default:
+			throw new IllegalArgumentException("Your DataType isn't supported yet");
+
+		}
+	    }
+	    catch (IllegalArgumentException | IllegalAccessException e)
+	    {
+		e.printStackTrace();
+	    }
+
+	}
+	sb.append(");");
 	return sb.toString();
     }
 
@@ -272,26 +364,23 @@ public class LCACase
 	List<String> createTableQuery = new ArrayList<>();
 	createTableQuery.add("DROP TABLE IF EXISTS lca;");
 	createTableQuery.add("CREATE TABLE lca(");
-	createTableQuery.add("caseNo VARCHAR(100),");
-	createTableQuery.add("caseStatus VARCHAR(100),");
-	createTableQuery.add("caseSubmitted DATE,");
-	createTableQuery.add("decisionDate DATE,");
-	createTableQuery.add("visaClass VARCHAR(100),");
-	createTableQuery.add("employmentStartDate DATE,");
-	createTableQuery.add("employmentEndDate DATE,");
-	createTableQuery.add("employerName VARCHAR(100),");
-	createTableQuery.add("employerAddress VARCHAR(100),");
-	createTableQuery.add("employerCity VARCHAR(100),");
-	createTableQuery.add("employerState VARCHAR(100),");
-	createTableQuery.add("employerPostalCode VARCHAR(100),");
-	createTableQuery.add("jobTitle VARCHAR(100),");
-	createTableQuery.add("socCode VARCHAR(100),");
-	createTableQuery.add("socName VARCHAR(100),");
-	createTableQuery.add("totalWorkers VARCHAR(100),");
-	createTableQuery.add("fullTimePosition VARCHAR(100),");
-	createTableQuery.add("worksiteLocation VARCHAR(100),");
-	createTableQuery.add("worksiteState VARCHAR(100),");
-	createTableQuery.add("NAIC VARCHAR(100)");
+
+	Map<Integer, Field> databaseFields = new LinkedHashMap<>();
+
+	Field[] fields = LCACase.class.getDeclaredFields();
+	for (Field field : fields)
+	{
+	    if (Modifier.isPrivate(field.getModifiers()) && field.isAnnotationPresent(LCA.class))
+	    {
+		databaseFields.put(field.getAnnotation(LCA.class).pos(), field);
+	    }
+	}
+
+	for (int i = 1; i <= databaseFields.size(); i++)
+	{
+	    Field field = databaseFields.get(i);
+	    createTableQuery.add(field.getName() + " " + field.getAnnotation(LCA.class).type() + (i < databaseFields.size() ? "," : ""));
+	}
 	createTableQuery.add(");");
 
 	return createTableQuery;
@@ -312,53 +401,42 @@ public class LCACase
 
     private String inputValidationDate(String dateStr)
     {
-	if (dateStr != null || dateStr == "")
+	SimpleDateFormat sdfOutput = new SimpleDateFormat("yyyy-MM-dd");
+	Date date = dateParser(dateStr);
+
+	if (date == null)
+	    return "null";
+	dateStr = sdfOutput.format(date);
+	return "'" + dateStr + "'";
+
+    }
+
+    /**
+     * try to parse a given string that is properly a date into a Date
+     * 
+     * @param candidate
+     * @return
+     */
+    private Date dateParser(String candidate)
+    {
+	if (candidate == null)
+	    return null;
+	List<SimpleDateFormat> knownPatterns = new ArrayList<SimpleDateFormat>();
+	knownPatterns.add(new SimpleDateFormat("yyyy-MM-dd"));
+	knownPatterns.add(new SimpleDateFormat("dd/MM/yyyy"));
+	knownPatterns.add(new SimpleDateFormat("dd.MM.yyyy"));
+
+	for (SimpleDateFormat pattern : knownPatterns)
 	{
-	    SimpleDateFormat sdfOutput = new SimpleDateFormat("yyyy-MM-dd");
-	    SimpleDateFormat sdfInput = new SimpleDateFormat("dd.MM.yyyy");
 	    try
 	    {
-		dateStr = "'" + sdfOutput.format(sdfInput.parse(dateStr)) + "'";
+		return new Date(pattern.parse(candidate).getTime());
 	    }
-	    catch (ParseException e)
+	    catch (ParseException pe)
 	    {
-		return "null";
+		// dateParser(candidate);
 	    }
 	}
-	else
-	{
-	    dateStr = "null";
-	}
-	return dateStr;
+	return null;
     }
-
-    public static String createTABLE_OneLiner()
-    {
-	StringBuilder sb = new StringBuilder();
-	sb.append("CREATE TABLE lca(");
-	sb.append("caseNo").append(" ").append("varchar(100)").append(" ").append(",");
-	sb.append("caseStatus").append(" ").append("varchar(100)").append(",");
-	sb.append("caseSubmitted").append(" ").append("varchar(100)").append(",");
-	sb.append("decisionDate").append(" ").append("varchar(100)").append(",");
-	sb.append("visaClass").append(" ").append("varchar(100)").append(",");
-	sb.append("employmentStartDate").append(" ").append("varchar(100)").append(",");
-	sb.append("employmentEndDate").append(" ").append("varchar(100)").append(",");
-	sb.append("employerName").append(" ").append("varchar(100)").append(",");
-	sb.append("employerAddress").append(" ").append("varchar(100)").append(",");
-	sb.append("employerCity").append(" ").append("varchar(100)").append(",");
-	sb.append("employerState").append(" ").append("varchar(100)").append(",");
-	sb.append("employerPostalCode").append(" ").append("varchar(100)").append(",");
-	sb.append("jobTitle").append(" ").append("varchar(100)").append(",");
-	sb.append("socCode").append(" ").append("varchar(100)").append(",");
-	sb.append("socName").append(" ").append("varchar(100)").append(",");
-	sb.append("totalWorkers").append(" ").append("varchar(100)").append(",");
-	sb.append("fullTimePosition").append(" ").append("varchar(100)").append(",");
-	sb.append("worksiteLocation").append(" ").append("varchar(100)").append(",");
-	sb.append("worksiteState").append(" ").append("varchar(100)").append(",");
-	sb.append("NAIC");
-	sb.append(");");
-
-	return sb.toString();
-    }
-
 }

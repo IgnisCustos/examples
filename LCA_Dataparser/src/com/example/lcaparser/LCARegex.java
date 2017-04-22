@@ -8,9 +8,7 @@ import java.lang.annotation.Target;
 
 @Retention(RUNTIME)
 @Target(FIELD)
-public @interface LCA
+public @interface LCARegex
 {
-    public int pos();
 
-    public String type();
 }
