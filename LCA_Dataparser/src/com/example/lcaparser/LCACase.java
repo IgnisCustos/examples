@@ -59,8 +59,7 @@ public class LCACase
     private String totalWorkers;
     @LCA(pos = 17, type = "VARCHAR(100)")
     private String fullTimePosition;
-
-    @LCA(pos = 18, type = "VARCHAR(100)")
+    @LCA(pos = 18, type = "NUMERIC")
     private String prevailingWage;
     @LCA(pos = 19, type = "VARCHAR(100)")
     private String prevailingWageUnitOfPay;
@@ -70,7 +69,6 @@ public class LCACase
     private String wageRateOfPay;
     @LCA(pos = 22, type = "VARCHAR(100)")
     private String wageUnitOfPay;
-
     @LCA(pos = 23, type = "VARCHAR(100)")
     private String worksiteCity;
     @LCA(pos = 24, type = "VARCHAR(100)")
@@ -391,15 +389,19 @@ public class LCACase
 		switch (field.getAnnotation(LCA.class).type())
 		{
 		    case "VARCHAR(100)":
-			sb.append(inputValidationStr((String) field.get(this))).append((i < databaseFields.size() ? "," : ""));
+			sb.append(inputValidationStr((String) field.get(this)));
 			break;
 		    case "DATE":
-			sb.append(inputValidationDate((String) field.get(this))).append((i < databaseFields.size() ? "," : ""));
+			sb.append(inputValidationDate((String) field.get(this)));
+			break;
+		    case "NUMERIC":
+			sb.append(inputValidationNumeric((String) field.get(this)));
 			break;
 		    default:
 			throw new IllegalArgumentException("Your DataType isn't supported yet");
 
 		}
+		sb.append((i < databaseFields.size() ? "," : ""));
 	    }
 	    catch (IllegalArgumentException | IllegalAccessException e)
 	    {
@@ -461,6 +463,27 @@ public class LCACase
 	dateStr = sdfOutput.format(date);
 	return "'" + dateStr + "'";
 
+    }
+
+    private String inputValidationNumeric(String floatStr)
+    {
+	if (floatStr != null)
+	{
+	    try
+	    {
+		Double.parseDouble(floatStr);
+	    }
+	    catch (NumberFormatException e)
+	    {
+		floatStr = "null";
+	    }
+
+	}
+	else
+	{
+	    floatStr = "null";
+	}
+	return floatStr;
     }
 
     /**
