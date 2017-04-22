@@ -29,17 +29,17 @@ public class LCACase
     private String caseNo;
     @LCA(pos = 2, type = "VARCHAR(100)")
     private String caseStatus;
-    @LCA(pos = 3, type = "VARCHAR(100)")
+    @LCA(pos = 3, type = "DATE")
     private String caseSubmitted;
     @LCA(pos = 4, type = "DATE")
     private String decisionDate;
-    @LCA(pos = 5, type = "DATE")
+    @LCA(pos = 5, type = "VARCHAR(100)")
     private String visaClass;
-    @LCA(pos = 6, type = "VARCHAR(100)")
+    @LCA(pos = 6, type = "DATE")
     private String employmentStartDate;
     @LCA(pos = 7, type = "DATE")
     private String employmentEndDate;
-    @LCA(pos = 8, type = "DATE")
+    @LCA(pos = 8, type = "VARCHAR(100)")
     private String employerName;
     @LCA(pos = 9, type = "VARCHAR(100)")
     private String employerAddress;
@@ -59,15 +59,27 @@ public class LCACase
     private String totalWorkers;
     @LCA(pos = 17, type = "VARCHAR(100)")
     private String fullTimePosition;
+
     @LCA(pos = 18, type = "VARCHAR(100)")
-    private String worksiteCity;
+    private String prevailingWage;
     @LCA(pos = 19, type = "VARCHAR(100)")
-    private String worksiteCounty;
+    private String prevailingWageUnitOfPay;
     @LCA(pos = 20, type = "VARCHAR(100)")
-    private String worksiteState;
+    private String prevailingWageSource;
     @LCA(pos = 21, type = "VARCHAR(100)")
-    private String worksitePostalCode;
+    private String wageRateOfPay;
     @LCA(pos = 22, type = "VARCHAR(100)")
+    private String wageUnitOfPay;
+
+    @LCA(pos = 23, type = "VARCHAR(100)")
+    private String worksiteCity;
+    @LCA(pos = 24, type = "VARCHAR(100)")
+    private String worksiteCounty;
+    @LCA(pos = 25, type = "VARCHAR(100)")
+    private String worksiteState;
+    @LCA(pos = 26, type = "VARCHAR(100)")
+    private String worksitePostalCode;
+    @LCA(pos = 27, type = "VARCHAR(100)")
     private String NAIC;
 
     // Regex for fields
@@ -105,6 +117,16 @@ public class LCACase
     private static String regexTotalWorkers = "(TOTAL)( |_)(WORKERS)";
     @LCARegex
     private static String regexFullTimePosition = "(FULL)_?(TIME)";
+    @LCARegex
+    private String regexPrevailingWage = "(PREVAILING_WAGE|PW_1)";
+    @LCARegex
+    private String regexPrevailingWageUnitOfPay = "(PW)_(UNIT)(?!_2)";
+    @LCARegex
+    private String regexPrevailingWageSource = "(PW).*(SOURCE)(?!_2)";
+    @LCARegex
+    private String regexWageRateOfPay = "(WAGE).*(RATE).*(PAY)";
+    @LCARegex
+    private String regexWageUnitOfPay = "(WAGE).*(UNIT).*(PAY)";
     @LCARegex
     private static String regexWorksiteCity = "(WORK)(LOC1|SITE)_?(CITY)";
     @LCARegex
@@ -266,6 +288,36 @@ public class LCACase
     public void setFullTimePosition(String fullTimePosition)
     {
 	this.fullTimePosition = fullTimePosition;
+    }
+
+    @LCASetter
+    public void setPrevailingWage(String prevailingWage)
+    {
+	this.prevailingWage = prevailingWage;
+    }
+
+    @LCASetter
+    public void setPrevailingWageUnitOfPay(String prevailingWageUnitOfPay)
+    {
+	this.prevailingWageUnitOfPay = prevailingWageUnitOfPay;
+    }
+
+    @LCASetter
+    public void setPrevailingWageSource(String prevailingWageSource)
+    {
+	this.prevailingWageSource = prevailingWageSource;
+    }
+
+    @LCASetter
+    public void setWageRateOfPay(String wageRateOfPay)
+    {
+	this.wageRateOfPay = wageRateOfPay;
+    }
+
+    @LCASetter
+    public void setWageUnitOfPay(String wageUnitOfPay)
+    {
+	this.wageUnitOfPay = wageUnitOfPay;
     }
 
     @LCASetter
