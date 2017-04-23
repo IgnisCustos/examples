@@ -11,6 +11,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.example.annotation.LCA;
+import com.example.annotation.LCARegex;
+import com.example.annotation.LCASetter;
+
 /**
  * Three Values are chained thogether NAME of VARIABLE annotated with LAC.class (position,type)
  * 

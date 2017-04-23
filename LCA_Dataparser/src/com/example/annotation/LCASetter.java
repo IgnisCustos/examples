@@ -1,4 +1,4 @@
-package com.example.lcaparser;
+package com.example.annotation;
 
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;

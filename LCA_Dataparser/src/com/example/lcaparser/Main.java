@@ -13,8 +13,16 @@ public class Main
 
     public static void main(String[] args) throws IOException
     {
-	Main main = new Main();
-	main.init(args);
+	if (args.length >= 1)
+	{
+	    Main main = new Main();
+	    main.init(args);
+	}
+	else
+	{
+	    System.out.println("Usage: FilePath [String fullFilePath...]");
+	}
+
     }
 
     private void init(String[] args) throws IOException
