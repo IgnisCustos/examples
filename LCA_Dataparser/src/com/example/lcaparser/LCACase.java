@@ -140,7 +140,9 @@ public class LCACase
     @LCARegex
     private static String regexNAIC = "(NAIC)";
 
-    private Map<String, String> declarationMap;
+    //
+    
+    private Map<String, String> declarationRegexMap;
 
     public LCACase()
     {
@@ -148,10 +150,10 @@ public class LCACase
 
     public LCACase(String forInit)
     {
-	this.declarationMap = setDeclarationMap();
+	this.declarationRegexMap = setDeclarationMap();
 	System.out.println("");
-	System.out.println("------------------- declarationMap (Entrys: " + declarationMap.size() + ") ---------------------");
-	for (Map.Entry<String, String> entry : declarationMap.entrySet())
+	System.out.println("------------------- declarationMap (Entrys: " + declarationRegexMap.size() + ") ---------------------");
+	for (Map.Entry<String, String> entry : declarationRegexMap.entrySet())
 	{
 	    System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
 	}
@@ -159,6 +161,10 @@ public class LCACase
 
     }
 
+    /**
+     * get all main-fields that should be declared in CSVFile too
+     * @return
+     */
     private Map<String, String> setDeclarationMap()
     {
 	Map<String, String> declarationMap = new HashMap<String, String>();
@@ -167,13 +173,10 @@ public class LCACase
 	    Field[] fields = LCACase.class.getDeclaredFields();
 	    for (Field field : fields)
 	    {
-		if (Modifier.isPrivate(field.getModifiers()))
+		if (Modifier.isPrivate(field.getModifiers())&&field.isAnnotationPresent(LCA.class))
 		{
 		    String value = (String) field.get(this);
-		    if (field.getName().contains("regex"))
-		    {
 			declarationMap.put(field.getName(), value);
-		    }
 		}
 	    }
 	}
@@ -184,10 +187,9 @@ public class LCACase
 	return declarationMap;
     }
 
-    @LCASetter
     public Map<String, String> getDeclarationmap()
     {
-	return declarationMap;
+	return declarationRegexMap;
     }
 
     @LCASetter
@@ -354,7 +356,7 @@ public class LCACase
 
     public void setDeclarationMap(Map<String, String> declarationMap)
     {
-	this.declarationMap = declarationMap;
+	this.declarationRegexMap = declarationMap;
     }
 
     @Override
@@ -364,7 +366,8 @@ public class LCACase
     }
 
     /**
-     * Build INSERT INTO Query entirely from annotation
+     * Returns a full sql query  for creating needed INSERT INTO in String
+     * Build based on reflection
      * 
      * @return
      */
@@ -417,6 +420,12 @@ public class LCACase
 	return sb.toString();
     }
 
+    
+    /**
+     * Returns a full sql statement  for creating needed table in String-List for beter formatting
+     * Build based on reflection
+     * @return
+     */
     public static List<String> createTABLE()
     {
 	List<String> createTableQuery = new ArrayList<>();

@@ -20,7 +20,7 @@ import com.example.annotation.LCASetter;
 public class LCAService
 {
     private Map<String, String> declarationRegexMap;
-    private Map<Integer, String> declarationLineup;
+    private Map<Integer, String> declarationIndexMapping;
 
     public LCAService()
     {
@@ -50,10 +50,10 @@ public class LCAService
 		lineNumber++;
 		if (lineNumber == 1)
 		{
-		    declarationLineup = getDeclarationLine(line);
+		    declarationIndexMapping = getDeclarationIndexMapping(line);
 		    System.out.println("");
-		    System.out.println("----------------- declarationLineup (Entrys: " + declarationLineup.size() + ") -----------------------");
-		    for (Entry<Integer, String> entry : declarationLineup.entrySet())
+		    System.out.println("----------------- declarationIndexMapping (Entrys: " + declarationIndexMapping.size() + ") -----------------------");
+		    for (Entry<Integer, String> entry : declarationIndexMapping.entrySet())
 		    {
 			System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
 		    }
@@ -85,9 +85,9 @@ public class LCAService
      * @param csvLine
      * @return
      */
-    private Map<Integer, String> getDeclarationLine(String csvLine)
+    private Map<Integer, String> getDeclarationIndexMapping(String csvLine)
     {
-	Map<Integer, String> declarationLine = new HashMap<Integer, String>();
+	Map<Integer, String> declarationIndexMap = new HashMap<Integer, String>();
 
 	String[] values = csvLine.split(";", -1);
 
@@ -95,18 +95,18 @@ public class LCAService
 	{
 	    String match = matchesUp(values[i]);
 	    if (match != null)
-		declarationLine.put(i, matchesUp(values[i]).replaceAll("regex", ""));
+		declarationIndexMap.put(i, matchesUp(values[i]).replaceAll("regex", ""));
 	}
-	return declarationLine;
+	return declarationIndexMap;
     }
 
     /**
      * check with defined regularExpression against given columnName normally the inputline cames from first csv line
      * 
-     * @param line
+     * @param string
      * @return
      */
-    private String matchesUp(String line)
+    private String matchesUp(String string)
     {
 	for (Map.Entry<String, String> entry : declarationRegexMap.entrySet())
 	{
@@ -117,7 +117,7 @@ public class LCAService
 	    Pattern r = Pattern.compile(pattern);
 
 	    // Now create matcher object.
-	    Matcher m = r.matcher(line);
+	    Matcher m = r.matcher(string);
 	    if (m.find())
 	    {
 		return entry.getKey();
@@ -145,7 +145,7 @@ public class LCAService
 	    values = csvLine.split(";", -1);
 	    for (int i = 0; i < values.length; i++)
 	    {
-		String declaredField = declarationLineup.get(i);
+		String declaredField = declarationIndexMapping.get(i);
 		if (declaredField != null)
 		{
 		    Method method = lca.getClass().getMethod("set" + declaredField, String.class);
