@@ -27,7 +27,7 @@ public class LCAService
 
     public LCAService()
     {
-	this.declarationRegexMap = new LCACase("").getDeclarationmap();
+	this.declarationRegexMap = new LCACase("").getDeclarationRegexMap();
     }
 
     /**
@@ -56,13 +56,13 @@ public class LCAService
 		    // First CSV declaration line
 		    declarationIndexMapping = getDeclarationIndexMapping(line);
 
-		    LOG.info("");
+		    LOG.debug("");
 		    LOG.info("----------------- declarationIndexMapping (Entrys: " + declarationIndexMapping.size() + ") -----------------------");
 		    for (Entry<Integer, String> entry : declarationIndexMapping.entrySet())
 		    {
-			LOG.info("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+			LOG.debug("Key = " + entry.getKey() + ", Value = " + entry.getValue());
 		    }
-		    LOG.info("----------------------------------------");
+		    LOG.debug("----------------------------------------");
 		}
 		else
 		{

@@ -39,13 +39,13 @@ public class LCACase extends LCAFields
     public LCACase(String forInit)
     {
 	this.declarationRegexMap = setDeclarationRegexMap();
-	LOG.info("");
+	LOG.debug("");
 	LOG.info("------------------- declarationMap (Entrys: " + declarationRegexMap.size() + ") ---------------------");
 	for (Map.Entry<String, String> entry : declarationRegexMap.entrySet())
 	{
-	    LOG.info("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+	    LOG.debug("Key = " + entry.getKey() + ", Value = " + entry.getValue());
 	}
-	LOG.info("----------------------------------------");
+	LOG.debug("----------------------------------------");
 
     }
 
@@ -77,7 +77,7 @@ public class LCACase extends LCAFields
 	return declarationMap;
     }
 
-    public Map<String, String> getDeclarationmap()
+    public Map<String, String> getDeclarationRegexMap()
     {
 	return declarationRegexMap;
     }
