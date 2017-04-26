@@ -13,7 +13,7 @@ import com.example.annotation.LCASetter;
  * @author Ignis
  *
  */
-public class LCAFields
+public abstract class LCAFields
 {
 
     // ----------------------------------------

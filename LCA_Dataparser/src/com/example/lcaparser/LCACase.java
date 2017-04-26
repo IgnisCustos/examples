@@ -149,7 +149,7 @@ public class LCACase extends LCAFields
     }
 
     /**
-     * Returns a full sql statement for creating needed table in String-List for beter formatting Build based on reflection
+     * Returns a full sql statement for creating needed table in String-List for better formatting Build based on reflection
      * 
      * @return
      */
@@ -161,7 +161,7 @@ public class LCACase extends LCAFields
 
 	Map<Integer, Field> databaseFields = new LinkedHashMap<>();
 
-	Field[] fields = LCACase.class.getDeclaredFields();
+	Field[] fields = LCAFields.class.getDeclaredFields();
 	for (Field field : fields)
 	{
 	    if (Modifier.isPrivate(field.getModifiers()) && field.isAnnotationPresent(LCA.class))
