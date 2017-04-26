@@ -4,10 +4,22 @@ import com.example.annotation.LCA;
 import com.example.annotation.LCARegex;
 import com.example.annotation.LCASetter;
 
+/**
+ * Declare two variables and one method to process them correctly and dynamically by LCAService.class
+ * 
+ * annotated var fieldname annotated var regexFieldname annotated meth setFieldname
+ * 
+ * 
+ * @author Ignis
+ *
+ */
 public class LCAFields
 {
 
     // ----------------------------------------
+    /*
+     * Should match CASE_NO(2008); LCA_CASE_NUMBER(2011); LCA_CASE_NUMBER(2014); CASE_NUMBER(2015)
+     */
     @LCA(pos = 1, type = "VARCHAR(100)")
     private String caseNo;
     @LCARegex
@@ -20,6 +32,9 @@ public class LCAFields
     }
 
     // ----------------------------------------
+    /*
+     * Should match TODO(2008); STATUS(2011,2014); CASE_STATUS(2015)
+     */
     @LCA(pos = 2, type = "VARCHAR(100)")
     private String caseStatus;
     @LCARegex
@@ -32,6 +47,9 @@ public class LCAFields
     }
 
     // ----------------------------------------
+    /*
+     * Should match SUBMITTED_DATE(2008); LCA_CASE_SUBMIT(2011,2014); CASE_SUBMITTED(2015)
+     */
     @LCA(pos = 3, type = "DATE")
     private String caseSubmitted;
     @LCARegex
@@ -44,6 +62,9 @@ public class LCAFields
     }
 
     // ----------------------------------------
+    /*
+     * Should match TODO(2008); DECISION_DATE(2011,2014); DECISION_DATE(2015)
+     */
     @LCA(pos = 4, type = "DATE")
     private String decisionDate;
     @LCARegex
@@ -56,6 +77,9 @@ public class LCAFields
     }
 
     // ----------------------------------------
+    /*
+     * Should match TODO(2008); VISA_CLASS(2011,2014); VISA_CLASS(2015)
+     */
     @LCA(pos = 5, type = "VARCHAR(100)")
     private String visaClass;
     @LCARegex
@@ -68,6 +92,9 @@ public class LCAFields
     }
 
     // ----------------------------------------
+    /*
+     * Should match TODO(2008); LCA_CASE_EMPLOYMENT_START_DATE(2011,2014); EMPLOYMENT_START_DATE(2015)
+     */
     @LCA(pos = 6, type = "DATE")
     private String employmentStartDate;
     @LCARegex
@@ -80,6 +107,9 @@ public class LCAFields
     }
 
     // ----------------------------------------
+    /*
+     * Should match TODO(2008); LCA_CASE_EMPLOYMENT_END_DATE(2011,2014); EMPLOYMENT_END_DATE(2015)
+     */
     @LCA(pos = 7, type = "DATE")
     private String employmentEndDate;
     @LCARegex
@@ -92,6 +122,9 @@ public class LCAFields
     }
 
     // ----------------------------------------
+    /*
+     * Should match TODO(2008); TODO(2011,2014); TODO(2015)
+     */
     @LCA(pos = 8, type = "VARCHAR(100)")
     private String employerName;
     @LCARegex
@@ -104,6 +137,9 @@ public class LCAFields
     }
 
     // ----------------------------------------
+    /*
+     * Should match TODO(2008); TODO(2011,2014); TODO(2015)
+     */
     @LCA(pos = 9, type = "VARCHAR(100)")
     private String employerAddress;
     @LCARegex
@@ -116,6 +152,9 @@ public class LCAFields
     }
 
     // ----------------------------------------
+    /*
+     * Should match TODO(2008); TODO(2011,2014); TODO(2015)
+     */
     @LCA(pos = 10, type = "VARCHAR(100)")
     private String employerCity;
     @LCARegex
@@ -128,6 +167,9 @@ public class LCAFields
     }
 
     // ----------------------------------------
+    /*
+     * Should match TODO(2008); TODO(2011,2014); TODO(2015)
+     */
     @LCA(pos = 11, type = "VARCHAR(100)")
     private String employerState;
     @LCARegex
@@ -140,6 +182,9 @@ public class LCAFields
     }
 
     // ----------------------------------------
+    /*
+     * Should match TODO(2008); TODO(2011,2014); TODO(2015)
+     */
     @LCA(pos = 12, type = "VARCHAR(100)")
     private String employerPostalCode;
     @LCARegex
@@ -152,6 +197,9 @@ public class LCAFields
     }
 
     // ----------------------------------------
+    /*
+     * Should match TODO(2008); TODO(2011,2014); TODO(2015)
+     */
     @LCA(pos = 13, type = "VARCHAR(100)")
     private String jobTitle;
     @LCARegex
@@ -164,6 +212,9 @@ public class LCAFields
     }
 
     // ----------------------------------------
+    /*
+     * Should match TODO(2008); TODO(2011,2014); TODO(2015)
+     */
     @LCA(pos = 14, type = "VARCHAR(100)")
     private String socCode;
     @LCARegex
@@ -176,6 +227,9 @@ public class LCAFields
     }
 
     // ----------------------------------------
+    /*
+     * Should match TODO(2008); TODO(2011,2014); TODO(2015)
+     */
     @LCA(pos = 15, type = "VARCHAR(100)")
     private String socName;
     @LCARegex
@@ -188,6 +242,9 @@ public class LCAFields
     }
 
     // ----------------------------------------
+    /*
+     * Should match TODO(2008); TODO(2011,2014); TODO(2015)
+     */
     @LCA(pos = 16, type = "VARCHAR(100)")
     private String totalWorkers;
     @LCARegex
@@ -200,6 +257,9 @@ public class LCAFields
     }
 
     // ----------------------------------------
+    /*
+     * Should match TODO(2008); TODO(2011,2014); TODO(2015)
+     */
     @LCA(pos = 17, type = "VARCHAR(100)")
     private String fullTimePosition;
     @LCARegex
@@ -212,6 +272,9 @@ public class LCAFields
     }
 
     // ----------------------------------------
+    /*
+     * Should match TODO(2008); TODO(2011,2014); TODO(2015)
+     */
     @LCA(pos = 18, type = "NUMERIC")
     private String prevailingWage;
     @LCARegex
@@ -224,6 +287,9 @@ public class LCAFields
     }
 
     // ----------------------------------------
+    /*
+     * Should match TODO(2008); TODO(2011,2014); TODO(2015)
+     */
     @LCA(pos = 19, type = "VARCHAR(100)")
     private String prevailingWageUnitOfPay;
     @LCARegex
@@ -236,6 +302,9 @@ public class LCAFields
     }
 
     // ----------------------------------------
+    /*
+     * Should match TODO(2008); TODO(2011,2014); TODO(2015)
+     */
     @LCA(pos = 20, type = "VARCHAR(100)")
     private String prevailingWageSource;
     @LCARegex
@@ -248,6 +317,9 @@ public class LCAFields
     }
 
     // ----------------------------------------
+    /*
+     * Should match TODO(2008); TODO(2011,2014); TODO(2015)
+     */
     @LCA(pos = 21, type = "VARCHAR(100)")
     private String wageRateOfPay;
     @LCARegex
@@ -260,6 +332,9 @@ public class LCAFields
     }
 
     // ----------------------------------------
+    /*
+     * Should match TODO(2008); TODO(2011,2014); TODO(2015)
+     */
     @LCA(pos = 22, type = "VARCHAR(100)")
     private String wageUnitOfPay;
     @LCARegex
@@ -272,6 +347,9 @@ public class LCAFields
     }
 
     // ----------------------------------------
+    /*
+     * Should match TODO(2008); TODO(2011,2014); TODO(2015)
+     */
     @LCA(pos = 23, type = "VARCHAR(100)")
     private String worksiteCity;
     @LCARegex
@@ -284,6 +362,9 @@ public class LCAFields
     }
 
     // ----------------------------------------
+    /*
+     * Should match TODO(2008); TODO(2011,2014); TODO(2015)
+     */
     @LCA(pos = 24, type = "VARCHAR(100)")
     private String worksiteCounty;
     @LCARegex
@@ -296,6 +377,9 @@ public class LCAFields
     }
 
     // ----------------------------------------
+    /*
+     * Should match TODO(2008); TODO(2011,2014); TODO(2015)
+     */
     @LCA(pos = 25, type = "VARCHAR(100)")
     private String worksiteState;
     @LCARegex
@@ -308,6 +392,9 @@ public class LCAFields
     }
 
     // ----------------------------------------
+    /*
+     * Should match TODO(2008); TODO(2011,2014); TODO(2015)
+     */
     @LCA(pos = 26, type = "VARCHAR(100)")
     private String worksitePostalCode;
     @LCARegex
@@ -320,6 +407,9 @@ public class LCAFields
     }
 
     // ----------------------------------------
+    /*
+     * Should match TODO(2008); TODO(2011,2014); TODO(2015)
+     */
     @LCA(pos = 27, type = "VARCHAR(100)")
     private String NAIC;
     @LCARegex

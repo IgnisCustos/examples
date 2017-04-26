@@ -71,7 +71,7 @@ public class LCAService
 		}
 	    }
 	    LOG.info("");
-	    LOG.info("Parsef file: " + inFile.getName());
+	    LOG.info("Parse of file: " + inFile.getName());
 	    LOG.info("Total parsed lines :'" + lineNumber + "'");
 
 	}
