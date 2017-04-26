@@ -32,7 +32,7 @@ public class Starter
     {
 	for (String inFilePath : args)
 	{
-	    System.out.println("############### START ###############");
+	    LOG.info("############### START ###############");
 	    File inFile = new File(inFilePath);
 	    String outFilePath = inFile.getAbsolutePath().replace(".csv", "") + ".sql";
 	    File outFile = new File(outFilePath);
@@ -40,9 +40,9 @@ public class Starter
 	    String dirPath = inFile.getAbsolutePath();
 	    dir = dirPath.substring(0, dirPath.lastIndexOf(File.separator)) + "\\";
 
-	    System.out.println("InputFile: " + inFile.getAbsolutePath());
-	    System.out.println("OutputFile: " + outFile.getAbsolutePath());
-	    System.out.println("Directory: " + dir);
+	    LOG.info("InputFile: " + inFile.getAbsolutePath());
+	    LOG.info("OutputFile: " + outFile.getAbsolutePath());
+	    LOG.info("Directory: " + dir);
 
 	    LCAService lcaService = new LCAService();
 	    lcaService.parseCSVtoSQL(inFile, outFile);
@@ -61,6 +61,6 @@ public class Starter
 
 	bw.close();
 
-	System.out.println("############### FINISH ###############");
+	LOG.info("############### FINISH ###############");
     }
 }

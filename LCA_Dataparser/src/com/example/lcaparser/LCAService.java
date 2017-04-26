@@ -154,7 +154,7 @@ public class LCAService
 		String declaredField = declarationIndexMapping.get(i);
 		if (declaredField != null)
 		{
-		    Method method = lca.getClass().getMethod("set" + declaredField, String.class);
+		    Method method = lca.getClass().getSuperclass().getMethod("set" + declaredField, String.class);
 		    if (method.isAnnotationPresent(LCASetter.class))
 		    {
 			method.invoke(lca, values[i]);

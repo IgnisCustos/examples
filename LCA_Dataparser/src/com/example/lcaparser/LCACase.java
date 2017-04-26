@@ -15,7 +15,6 @@ import org.apache.log4j.Logger;
 
 import com.example.annotation.LCA;
 import com.example.annotation.LCARegex;
-import com.example.annotation.LCASetter;
 
 /**
  * Three Values are chained thogether NAME of VARIABLE annotated with LAC.class (position,type)
@@ -27,123 +26,11 @@ import com.example.annotation.LCASetter;
  * @author Ignis
  *
  */
-public class LCACase
+public class LCACase extends LCAFields
 {
 
     final static Logger LOG = Logger.getLogger(LCACase.class);
     private Map<String, String> declarationRegexMap;
-
-    // DB & CSV - Fields
-    @LCA(pos = 1, type = "VARCHAR(100)")
-    private String caseNo;
-    @LCA(pos = 2, type = "VARCHAR(100)")
-    private String caseStatus;
-    @LCA(pos = 3, type = "DATE")
-    private String caseSubmitted;
-    @LCA(pos = 4, type = "DATE")
-    private String decisionDate;
-    @LCA(pos = 5, type = "VARCHAR(100)")
-    private String visaClass;
-    @LCA(pos = 6, type = "DATE")
-    private String employmentStartDate;
-    @LCA(pos = 7, type = "DATE")
-    private String employmentEndDate;
-    @LCA(pos = 8, type = "VARCHAR(100)")
-    private String employerName;
-    @LCA(pos = 9, type = "VARCHAR(100)")
-    private String employerAddress;
-    @LCA(pos = 10, type = "VARCHAR(100)")
-    private String employerCity;
-    @LCA(pos = 11, type = "VARCHAR(100)")
-    private String employerState;
-    @LCA(pos = 12, type = "VARCHAR(100)")
-    private String employerPostalCode;
-    @LCA(pos = 13, type = "VARCHAR(100)")
-    private String jobTitle;
-    @LCA(pos = 14, type = "VARCHAR(100)")
-    private String socCode;
-    @LCA(pos = 15, type = "VARCHAR(100)")
-    private String socName;
-    @LCA(pos = 16, type = "VARCHAR(100)")
-    private String totalWorkers;
-    @LCA(pos = 17, type = "VARCHAR(100)")
-    private String fullTimePosition;
-    @LCA(pos = 18, type = "NUMERIC")
-    private String prevailingWage;
-    @LCA(pos = 19, type = "VARCHAR(100)")
-    private String prevailingWageUnitOfPay;
-    @LCA(pos = 20, type = "VARCHAR(100)")
-    private String prevailingWageSource;
-    @LCA(pos = 21, type = "VARCHAR(100)")
-    private String wageRateOfPay;
-    @LCA(pos = 22, type = "VARCHAR(100)")
-    private String wageUnitOfPay;
-    @LCA(pos = 23, type = "VARCHAR(100)")
-    private String worksiteCity;
-    @LCA(pos = 24, type = "VARCHAR(100)")
-    private String worksiteCounty;
-    @LCA(pos = 25, type = "VARCHAR(100)")
-    private String worksiteState;
-    @LCA(pos = 26, type = "VARCHAR(100)")
-    private String worksitePostalCode;
-    @LCA(pos = 27, type = "VARCHAR(100)")
-    private String NAIC;
-
-    // Regex for fields
-    @LCARegex
-    private static String regexCaseNo = "(CASE)_(NO|NUMBER)";
-    @LCARegex
-    private static String regexCaseStatus = "(CASE)?_?(STATUS)";
-    @LCARegex
-    private static String regexCaseSubmitted = "(CASE)?_?(SUBMIT)";
-    @LCARegex
-    private static String regexDecisionDate = "(DECISION)_?(DATE)";
-    @LCARegex
-    private static String regexVisaClass = "(VISA)_?(CLASS)";
-    @LCARegex
-    private static String regexEmploymentStartDate = "\\w+(START)_(DATE)";
-    @LCARegex
-    private static String regexEmploymentEndDate = "\\w+(END)_(DATE)";
-    @LCARegex
-    private static String regexEmployerName = "(EMPLOYER)_(NAME)";
-    @LCARegex
-    private static String regexEmployerAddress = "\\w+(EMPLOYER)?_?(ADDRESS)(?!2)";
-    @LCARegex
-    private static String regexEmployerCity = "(EMPLOYER)_?(CITY)";
-    @LCARegex
-    private static String regexEmployerState = "(EMPLOYER)_?(STATE)";
-    @LCARegex
-    private static String regexEmployerPostalCode = "(EMPLOYER)_?(POSTAL)";
-    @LCARegex
-    private static String regexJobTitle = "(JOB)_?(TITLE)";
-    @LCARegex
-    private static String regexSocCode = "(SOC)_?(CODE)";
-    @LCARegex
-    private static String regexSocName = "(SOC)_?(NAME)";
-    @LCARegex
-    private static String regexTotalWorkers = "(TOTAL)( |_)(WORKERS)";
-    @LCARegex
-    private static String regexFullTimePosition = "(FULL)_?(TIME)";
-    @LCARegex
-    private String regexPrevailingWage = "(PREVAILING.*|PW.*)_(WAGE.1|WAGE\b|.*UNIT.1)";
-    @LCARegex
-    private String regexPrevailingWageUnitOfPay = "(PW)_(UNIT)(?!_2)";
-    @LCARegex
-    private String regexPrevailingWageSource = "(PW).*(SOURCE)(?!_2)";
-    @LCARegex
-    private String regexWageRateOfPay = "(WAGE).*(RATE).*(PAY)";
-    @LCARegex
-    private String regexWageUnitOfPay = "(WAGE).*(UNIT).*(PAY)";
-    @LCARegex
-    private static String regexWorksiteCity = "(WORK)(LOC1|SITE)_?(CITY)";
-    @LCARegex
-    private static String regexWorksiteCounty = "(WORK)(LOC1|SITE)_?(COUNTY)";
-    @LCARegex
-    private static String regexWorksiteState = "(WORK)(LOC1|SITE)_?(STATE)";
-    @LCARegex
-    private static String regexWorksitePostalCode = "(WORK)(LOC1|SITE)_?(POSTAL)";
-    @LCARegex
-    private static String regexNAIC = "(NAIC)";
 
     public LCACase()
     {
@@ -172,11 +59,12 @@ public class LCACase
 	Map<String, String> declarationMap = new HashMap<String, String>();
 	try
 	{
-	    Field[] fields = LCACase.class.getDeclaredFields();
+	    Field[] fields = LCAFields.class.getDeclaredFields();
 	    for (Field field : fields)
 	    {
 		if (Modifier.isPrivate(field.getModifiers()) && field.isAnnotationPresent(LCARegex.class))
 		{
+		    field.setAccessible(true);
 		    String value = (String) field.get(this);
 		    declarationMap.put(field.getName(), value);
 		}
@@ -194,171 +82,9 @@ public class LCACase
 	return declarationRegexMap;
     }
 
-    @LCASetter
-    public void setCaseNo(String caseNo)
+    public void setDeclarationMap(Map<String, String> declarationRegexMap)
     {
-	this.caseNo = caseNo;
-    }
-
-    @LCASetter
-    public void setCaseStatus(String caseStatus)
-    {
-	this.caseStatus = caseStatus;
-    }
-
-    @LCASetter
-    public void setCaseSubmitted(String caseSubmitted)
-    {
-	this.caseSubmitted = caseSubmitted;
-    }
-
-    @LCASetter
-    public void setDecisionDate(String decisionDate)
-    {
-	this.decisionDate = decisionDate;
-    }
-
-    @LCASetter
-    public void setVisaClass(String visaClass)
-    {
-	this.visaClass = visaClass;
-    }
-
-    @LCASetter
-    public void setEmploymentStartDate(String employmentStartDate)
-    {
-	this.employmentStartDate = employmentStartDate;
-    }
-
-    @LCASetter
-    public void setEmploymentEndDate(String employmentEndDate)
-    {
-	this.employmentEndDate = employmentEndDate;
-    }
-
-    @LCASetter
-    public void setEmployerName(String employerName)
-    {
-	this.employerName = employerName;
-    }
-
-    @LCASetter
-    public void setEmployerAddress(String employerAddress)
-    {
-	this.employerAddress = employerAddress;
-    }
-
-    @LCASetter
-    public void setEmployerCity(String employerCity)
-    {
-	this.employerCity = employerCity;
-    }
-
-    @LCASetter
-    public void setEmployerState(String employerState)
-    {
-	this.employerState = employerState;
-    }
-
-    @LCASetter
-    public void setEmployerPostalCode(String employerPostalCode)
-    {
-	this.employerPostalCode = employerPostalCode;
-    }
-
-    @LCASetter
-    public void setJobTitle(String jobTitle)
-    {
-	this.jobTitle = jobTitle;
-    }
-
-    @LCASetter
-    public void setSocCode(String socCode)
-    {
-	this.socCode = socCode;
-    }
-
-    @LCASetter
-    public void setSocName(String socName)
-    {
-	this.socName = socName;
-    }
-
-    @LCASetter
-    public void setTotalWorkers(String totalWorkers)
-    {
-	this.totalWorkers = totalWorkers;
-    }
-
-    @LCASetter
-    public void setFullTimePosition(String fullTimePosition)
-    {
-	this.fullTimePosition = fullTimePosition;
-    }
-
-    @LCASetter
-    public void setPrevailingWage(String prevailingWage)
-    {
-	this.prevailingWage = prevailingWage;
-    }
-
-    @LCASetter
-    public void setPrevailingWageUnitOfPay(String prevailingWageUnitOfPay)
-    {
-	this.prevailingWageUnitOfPay = prevailingWageUnitOfPay;
-    }
-
-    @LCASetter
-    public void setPrevailingWageSource(String prevailingWageSource)
-    {
-	this.prevailingWageSource = prevailingWageSource;
-    }
-
-    @LCASetter
-    public void setWageRateOfPay(String wageRateOfPay)
-    {
-	this.wageRateOfPay = wageRateOfPay;
-    }
-
-    @LCASetter
-    public void setWageUnitOfPay(String wageUnitOfPay)
-    {
-	this.wageUnitOfPay = wageUnitOfPay;
-    }
-
-    @LCASetter
-    public void setWorksiteCity(String worksiteCity)
-    {
-	this.worksiteCity = worksiteCity;
-    }
-
-    @LCASetter
-    public void setWorksiteCounty(String worksiteCounty)
-    {
-	this.worksiteCounty = worksiteCounty;
-    }
-
-    @LCASetter
-    public void setWorksiteState(String worksiteState)
-    {
-	this.worksiteState = worksiteState;
-    }
-
-    @LCASetter
-    public void setWorksitePostalCode(String worksitePostalCode)
-    {
-	this.worksitePostalCode = worksitePostalCode;
-    }
-
-    @LCASetter
-    public void setNAIC(String naic)
-    {
-	this.NAIC = naic;
-    }
-
-    public void setDeclarationMap(Map<String, String> declarationMap)
-    {
-	this.declarationRegexMap = declarationMap;
+	this.declarationRegexMap = declarationRegexMap;
     }
 
     @Override
@@ -380,11 +106,12 @@ public class LCACase
 	sb.append("INSERT INTO lca VALUES(");
 	createTableQuery.add("INSERT INTO lca VALUES(");
 
-	Field[] fields = LCACase.class.getDeclaredFields();
+	Field[] fields = LCAFields.class.getDeclaredFields();
 	for (Field field : fields)
 	{
 	    if (Modifier.isPrivate(field.getModifiers()) && field.isAnnotationPresent(LCA.class))
 	    {
+		field.setAccessible(true);
 		databaseFields.put(field.getAnnotation(LCA.class).pos(), field);
 	    }
 	}
