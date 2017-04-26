@@ -15,10 +15,13 @@ import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.log4j.Logger;
+
 import com.example.annotation.LCASetter;
 
 public class LCAService
 {
+    private final Logger LOG = Logger.getLogger(this.getClass().getSimpleName());
     private Map<String, String> declarationRegexMap;
     private Map<Integer, String> declarationIndexMapping;
 
@@ -50,23 +53,26 @@ public class LCAService
 		lineNumber++;
 		if (lineNumber == 1)
 		{
+		    // First CSV declaration line
 		    declarationIndexMapping = getDeclarationIndexMapping(line);
-		    System.out.println("");
-		    System.out.println("----------------- declarationIndexMapping (Entrys: " + declarationIndexMapping.size() + ") -----------------------");
+
+		    LOG.info("");
+		    LOG.info("----------------- declarationIndexMapping (Entrys: " + declarationIndexMapping.size() + ") -----------------------");
 		    for (Entry<Integer, String> entry : declarationIndexMapping.entrySet())
 		    {
-			System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+			LOG.info("Key = " + entry.getKey() + ", Value = " + entry.getValue());
 		    }
-		    System.out.println("----------------------------------------");
+		    LOG.info("----------------------------------------");
 		}
 		else
 		{
+		    // CSV data lines
 		    parseCSVLine(bw, line);
 		}
 	    }
-	    System.out.println("");
-	    System.out.println("Parsef file: " + inFile.getName());
-	    System.out.println("Total parsed lines :'" + lineNumber + "'");
+	    LOG.info("");
+	    LOG.info("Parsef file: " + inFile.getName());
+	    LOG.info("Total parsed lines :'" + lineNumber + "'");
 
 	}
 	catch (IOException e)

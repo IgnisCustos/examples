@@ -11,6 +11,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+
 import com.example.annotation.LCA;
 import com.example.annotation.LCARegex;
 import com.example.annotation.LCASetter;
@@ -28,7 +30,10 @@ import com.example.annotation.LCASetter;
 public class LCACase
 {
 
-    // Fields
+    final static Logger LOG = Logger.getLogger(LCACase.class);
+    private Map<String, String> declarationRegexMap;
+
+    // DB & CSV - Fields
     @LCA(pos = 1, type = "VARCHAR(100)")
     private String caseNo;
     @LCA(pos = 2, type = "VARCHAR(100)")
@@ -120,7 +125,7 @@ public class LCACase
     @LCARegex
     private static String regexFullTimePosition = "(FULL)_?(TIME)";
     @LCARegex
-    private String regexPrevailingWage = "(PREVAILING_WAGE|PW_1)";
+    private String regexPrevailingWage = "(PREVAILING.*|PW.*)_(WAGE.1|WAGE\b|.*UNIT.1)";
     @LCARegex
     private String regexPrevailingWageUnitOfPay = "(PW)_(UNIT)(?!_2)";
     @LCARegex
@@ -140,32 +145,29 @@ public class LCACase
     @LCARegex
     private static String regexNAIC = "(NAIC)";
 
-    //
-    
-    private Map<String, String> declarationRegexMap;
-
     public LCACase()
     {
     }
 
     public LCACase(String forInit)
     {
-	this.declarationRegexMap = setDeclarationMap();
-	System.out.println("");
-	System.out.println("------------------- declarationMap (Entrys: " + declarationRegexMap.size() + ") ---------------------");
+	this.declarationRegexMap = setDeclarationRegexMap();
+	LOG.info("");
+	LOG.info("------------------- declarationMap (Entrys: " + declarationRegexMap.size() + ") ---------------------");
 	for (Map.Entry<String, String> entry : declarationRegexMap.entrySet())
 	{
-	    System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+	    LOG.info("Key = " + entry.getKey() + ", Value = " + entry.getValue());
 	}
-	System.out.println("----------------------------------------");
+	LOG.info("----------------------------------------");
 
     }
 
     /**
      * get all main-fields that should be declared in CSVFile too
+     * 
      * @return
      */
-    private Map<String, String> setDeclarationMap()
+    private Map<String, String> setDeclarationRegexMap()
     {
 	Map<String, String> declarationMap = new HashMap<String, String>();
 	try
@@ -173,10 +175,10 @@ public class LCACase
 	    Field[] fields = LCACase.class.getDeclaredFields();
 	    for (Field field : fields)
 	    {
-		if (Modifier.isPrivate(field.getModifiers())&&field.isAnnotationPresent(LCA.class))
+		if (Modifier.isPrivate(field.getModifiers()) && field.isAnnotationPresent(LCARegex.class))
 		{
 		    String value = (String) field.get(this);
-			declarationMap.put(field.getName(), value);
+		    declarationMap.put(field.getName(), value);
 		}
 	    }
 	}
@@ -366,8 +368,7 @@ public class LCACase
     }
 
     /**
-     * Returns a full sql query  for creating needed INSERT INTO in String
-     * Build based on reflection
+     * Returns a full sql query for creating needed INSERT INTO in String Build based on reflection
      * 
      * @return
      */
@@ -420,10 +421,9 @@ public class LCACase
 	return sb.toString();
     }
 
-    
     /**
-     * Returns a full sql statement  for creating needed table in String-List for beter formatting
-     * Build based on reflection
+     * Returns a full sql statement for creating needed table in String-List for beter formatting Build based on reflection
+     * 
      * @return
      */
     public static List<String> createTABLE()

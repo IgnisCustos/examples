@@ -7,20 +7,23 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.List;
 
-public class Main
+import org.apache.log4j.Logger;
+
+public class Starter
 {
     private String dir = "";
+    final static Logger LOG = Logger.getLogger(Starter.class);
 
     public static void main(String[] args) throws IOException
     {
 	if (args.length >= 1)
 	{
-	    Main main = new Main();
+	    Starter main = new Starter();
 	    main.init(args);
 	}
 	else
 	{
-	    System.out.println("Usage: FilePath [String fullFilePath...]");
+	    LOG.info("Usage: FilePath [String fullFilePath...]");
 	}
 
     }
@@ -60,5 +63,4 @@ public class Main
 
 	System.out.println("############### FINISH ###############");
     }
-
 }
