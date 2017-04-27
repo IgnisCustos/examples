@@ -218,7 +218,7 @@ public abstract class LCAFields
     @LCA(pos = 14, type = "VARCHAR(100)")
     private String socCode;
     @LCARegex
-    private static String regexSocCode = "(SOC)_?(CODE)";
+    private static String regexSocCode = "(JOB.CODE|SOC.CODE)";
 
     @LCASetter
     public void setSocCode(String socCode)
@@ -233,7 +233,7 @@ public abstract class LCAFields
     @LCA(pos = 15, type = "VARCHAR(100)")
     private String socName;
     @LCARegex
-    private static String regexSocName = "(SOC)_?(NAME)";
+    private static String regexSocName = "(OCCUPATIONAL|SOC.NAME)";
 
     @LCASetter
     public void setSocName(String socName)
@@ -248,7 +248,7 @@ public abstract class LCAFields
     @LCA(pos = 16, type = "VARCHAR(100)")
     private String totalWorkers;
     @LCARegex
-    private static String regexTotalWorkers = "(TOTAL)( |_)(WORKERS)";
+    private static String regexTotalWorkers = "(IMMIGRANTS|WORKERS)";
 
     @LCASetter
     public void setTotalWorkers(String totalWorkers)
@@ -263,7 +263,7 @@ public abstract class LCAFields
     @LCA(pos = 17, type = "VARCHAR(100)")
     private String fullTimePosition;
     @LCARegex
-    private static String regexFullTimePosition = "(FULL)_?(TIME)";
+    private static String regexFullTimePosition = "((FULL|PART).TIME)";
 
     @LCASetter
     public void setFullTimePosition(String fullTimePosition)
@@ -278,7 +278,7 @@ public abstract class LCAFields
     @LCA(pos = 18, type = "NUMERIC")
     private String prevailingWage;
     @LCARegex
-    private String regexPrevailingWage = "(PREVAILING.*|PW.*)_(WAGE.1|WAGE\b|.*UNIT.1)";
+    private String regexPrevailingWage = "((PREVAILING_WAGE(_1)*)(?!_2)|PW_1)";
 
     @LCASetter
     public void setPrevailingWage(String prevailingWage)
@@ -293,7 +293,7 @@ public abstract class LCAFields
     @LCA(pos = 19, type = "VARCHAR(100)")
     private String prevailingWageUnitOfPay;
     @LCARegex
-    private String regexPrevailingWageUnitOfPay = "(PW)_(UNIT)(?!_2)";
+    private String regexPrevailingWageUnitOfPay = "(PW_UNIT|\bWAGE_SOURCE_1\b)(?!_2)";
 
     @LCASetter
     public void setPrevailingWageUnitOfPay(String prevailingWageUnitOfPay)
@@ -323,7 +323,7 @@ public abstract class LCAFields
     @LCA(pos = 21, type = "VARCHAR(100)")
     private String wageRateOfPay;
     @LCARegex
-    private String regexWageRateOfPay = "(WAGE).*(RATE).*(PAY)";
+    private String regexWageRateOfPay = "(WAGE).*(RATE).*(PAY)|(RATE_PER_1)";
 
     @LCASetter
     public void setWageRateOfPay(String wageRateOfPay)
