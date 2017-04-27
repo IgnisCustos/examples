@@ -98,7 +98,7 @@ public abstract class LCAFields
     @LCA(pos = 6, type = "DATE")
     private String employmentStartDate;
     @LCARegex
-    private static String regexEmploymentStartDate = "\\w+(START)_(DATE)";
+    private static String regexEmploymentStartDate = "(EMPLOY.*START|BEGIN)_(DATE)";
 
     @LCASetter
     public void setEmploymentStartDate(String employmentStartDate)
@@ -113,7 +113,7 @@ public abstract class LCAFields
     @LCA(pos = 7, type = "DATE")
     private String employmentEndDate;
     @LCARegex
-    private static String regexEmploymentEndDate = "\\w+(END)_(DATE)";
+    private static String regexEmploymentEndDate = "(END)_(DATE)";
 
     @LCASetter
     public void setEmploymentEndDate(String employmentEndDate)
@@ -128,7 +128,7 @@ public abstract class LCAFields
     @LCA(pos = 8, type = "VARCHAR(100)")
     private String employerName;
     @LCARegex
-    private static String regexEmployerName = "(EMPLOYER)_(NAME)";
+    private static String regexEmployerName = "(\bNAME\b|EMPLOYER_NAME)";
 
     @LCASetter
     public void setEmployerName(String employerName)
@@ -143,7 +143,7 @@ public abstract class LCAFields
     @LCA(pos = 9, type = "VARCHAR(100)")
     private String employerAddress;
     @LCARegex
-    private static String regexEmployerAddress = "\\w+(EMPLOYER)?_?(ADDRESS)(?!2)";
+    private static String regexEmployerAddress = "(\b.*ADDRESS(|1)\b)";
 
     @LCASetter
     public void setEmployerAddress(String employerAddress)
@@ -158,7 +158,7 @@ public abstract class LCAFields
     @LCA(pos = 10, type = "VARCHAR(100)")
     private String employerCity;
     @LCARegex
-    private static String regexEmployerCity = "(EMPLOYER)_?(CITY)";
+    private static String regexEmployerCity = "(EMPLOYER_CITY|\bCITY\b)";
 
     @LCASetter
     public void setEmployerCity(String employerCity)
@@ -173,7 +173,7 @@ public abstract class LCAFields
     @LCA(pos = 11, type = "VARCHAR(100)")
     private String employerState;
     @LCARegex
-    private static String regexEmployerState = "(EMPLOYER)_?(STATE)";
+    private static String regexEmployerState = "(EMPLOYER_STATE|\bSTATE\b)";
 
     @LCASetter
     public void setEmployerState(String employerState)
@@ -188,7 +188,7 @@ public abstract class LCAFields
     @LCA(pos = 12, type = "VARCHAR(100)")
     private String employerPostalCode;
     @LCARegex
-    private static String regexEmployerPostalCode = "(EMPLOYER)_?(POSTAL)";
+    private static String regexEmployerPostalCode = "(EMPLOYER_POSTAL_CODE|\bPOSTAL_CODE\b)";
 
     @LCASetter
     public void setEmployerPostalCode(String employerPostalCode)

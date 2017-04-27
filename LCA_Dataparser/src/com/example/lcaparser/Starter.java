@@ -18,8 +18,10 @@ public class Starter
     {
 	if (args.length >= 1)
 	{
+	    LOG.info("############### START ###############");
 	    Starter main = new Starter();
 	    main.init(args);
+	    LOG.info("############### FINISH ###############");
 	}
 	else
 	{
@@ -30,9 +32,10 @@ public class Starter
 
     private void init(String[] args) throws IOException
     {
+
 	for (String inFilePath : args)
 	{
-	    LOG.info("############### START ###############");
+	    LOG.info("-------------------------------------");
 	    File inFile = new File(inFilePath);
 	    String outFilePath = inFile.getAbsolutePath().replace(".csv", "") + ".sql";
 	    File outFile = new File(outFilePath);
@@ -61,6 +64,5 @@ public class Starter
 
 	bw.close();
 
-	LOG.info("############### FINISH ###############");
     }
 }

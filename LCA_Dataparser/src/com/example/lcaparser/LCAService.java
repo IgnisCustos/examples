@@ -57,7 +57,7 @@ public class LCAService
 		    declarationIndexMapping = getDeclarationIndexMapping(line);
 
 		    LOG.debug("");
-		    LOG.info("----------------- declarationIndexMapping (Entrys: " + declarationIndexMapping.size() + ") -----------------------");
+		    LOG.debug("----------------- declarationIndexMapping (Entrys: " + declarationIndexMapping.size() + ") -----------------------");
 		    for (Entry<Integer, String> entry : declarationIndexMapping.entrySet())
 		    {
 			LOG.debug("Key = " + entry.getKey() + ", Value = " + entry.getValue());
@@ -71,8 +71,9 @@ public class LCAService
 		}
 	    }
 	    LOG.info("");
-	    LOG.info("Parse of file: " + inFile.getName());
-	    LOG.info("Total parsed lines :'" + lineNumber + "'");
+	    LOG.info("Parse of file: \t\t" + inFile.getName());
+	    LOG.info("Total parsed lines: \t\t'" + lineNumber + "'");
+	    LOG.info("Total of found fields: \t(" + declarationIndexMapping.size() + "/" + declarationRegexMap.size() + ")");
 
 	}
 	catch (IOException e)

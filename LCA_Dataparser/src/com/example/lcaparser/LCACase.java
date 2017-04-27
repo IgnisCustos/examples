@@ -40,7 +40,7 @@ public class LCACase extends LCAFields
     {
 	this.declarationRegexMap = setDeclarationRegexMap();
 	LOG.debug("");
-	LOG.info("------------------- declarationMap (Entrys: " + declarationRegexMap.size() + ") ---------------------");
+	LOG.debug("------------------- declarationMap (Entrys: " + declarationRegexMap.size() + ") ---------------------");
 	for (Map.Entry<String, String> entry : declarationRegexMap.entrySet())
 	{
 	    LOG.debug("Key = " + entry.getKey() + ", Value = " + entry.getValue());
