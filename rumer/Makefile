@@ -18,5 +18,5 @@ main: rumer_buffer.o main.o
 
 
 clean:
-	rm -f *.o main
+	rm -f *.o rumer
 

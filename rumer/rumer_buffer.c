@@ -1,5 +1,6 @@
 #include "rumer_buffer.h"
-#include "stdio.h"
+#include <stdio.h>
+#include <time.h>
 #include "stdlib.h"
 #include "string.h"
 
@@ -14,10 +15,20 @@ struct rumer_buffer* allocate_buffer(int size) {
     buffer->seec=0;
     return buffer;
 }
+const char* addTime2()
+{
+  time_t rawtime;
+  struct tm * timeinfo;
+
+  time ( &rawtime );
+  timeinfo = localtime ( &rawtime );
+  return asctime(timeinfo);
+}
+
 void singleEventEffect(struct rumer_buffer* buffer, int value)
 {
     buffer->seec=buffer->seec+1;
-    printf("Single Event Effect: %d\n",value);
+    printf("\n\n%s Single Event Effect: %d\n\n",addTime2(),value);
 }
 
 int getSeec(struct rumer_buffer* buffer)
